@@ -1,6 +1,8 @@
+
+
+#%%
+
 import kagglehub as k
-
-
 
 
 import pandas as pd
@@ -24,9 +26,14 @@ search_logs = pd.read_csv("./Files/search_logs.csv")
 
 # Most common subscription plans for users
 
-subscription_plans = users.value_counts("subscription_plan")
+subscription_plans = users.value_counts("subscription_plan").reset_index()
+
+subscription_plans.columns = ["sub_plans","count"]
 
 print(subscription_plans)
 
-sns.countplot(x = subscription_plans)
+sns.barplot(data=subscription_plans, x="sub_plans",y="count")
 plt.show()
+
+
+

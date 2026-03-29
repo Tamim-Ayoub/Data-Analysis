@@ -12,36 +12,13 @@ import seaborn as sns
 
 
 
-# URLs for the data files on Kaggle
+# Read the CSV files into a DataFrame
 
-
-path = k.dataset_download("sayeeduddin/netflix-2025user-behavior-dataset-210k-records",output_dir='./Files',force_download=True)
-
-print(path)
-
-""" 
-url_users = "https://www.kaggle.com/datasets/sayeeduddin/netflix-2025user-behavior-dataset-210k-records?select=users.csv"
-
-url_movies = "https://www.kaggle.com/datasets/sayeeduddin/netflix-2025user-behavior-dataset-210k-records?select=movies.csv"
-
-url_reviews = "https://www.kaggle.com/datasets/sayeeduddin/netflix-2025user-behavior-dataset-210k-records?select=reviews.csv"
-
-url_search_logs = "https://www.kaggle.com/datasets/sayeeduddin/netflix-2025user-behavior-dataset-210k-records?select=search_logs.csv"
-
-url_watch_history = "https://www.kaggle.com/datasets/sayeeduddin/netflix-2025user-behavior-dataset-210k-records?select=watch_history.csv"
-
-
-
-# Reading the data files and converting them to Panda's DataFrames
-users = pd.read_csv(url_users)
-
-movies = pd.read_csv(url_movies)
-
-reviews = pd.read_csv(url_reviews)
-
-search_logs = pd.read_csv(url_search_logs)
-
-watch_history = pd.read_csv(url_watch_history)
+users = pd.read_csv("./Files/users.csv")
+movies = pd.read_csv("./Files/movies.csv")
+watch_history = pd.read_csv("./Files/watch_history.csv")
+reviews = pd.read_csv("./Files/reviews.csv")
+search_logs = pd.read_csv("./Files/search_logs.csv")
 
 
 
@@ -49,5 +26,7 @@ watch_history = pd.read_csv(url_watch_history)
 
 subscription_plans = users.value_counts("subscription_plan")
 
+print(subscription_plans)
 
- """
+sns.countplot(x = subscription_plans)
+plt.show()

@@ -1,3 +1,8 @@
+import kagglehub as k
+
+
+
+
 import pandas as pd
 
 import matplotlib.pyplot as plt
@@ -5,12 +10,44 @@ import matplotlib.pyplot as plt
 
 import seaborn as sns
 
-data = pd.read_csv("Files/health_inequality.csv")
 
 
-high_exp_data_2001 = data[(data["le_agg_q1_F"] >= 80) & (data["year"] == 2001) ][["statename","le_agg_q1_F"]]
+# URLs for the data files on Kaggle
 
 
-sns.barplot(data= high_exp_data_2001,x="statename",y="le_agg_q1_F")
+path = k.dataset_download("sayeeduddin/netflix-2025user-behavior-dataset-210k-records",output_dir='./Files',force_download=True)
 
-plt.show()
+print(path)
+
+""" 
+url_users = "https://www.kaggle.com/datasets/sayeeduddin/netflix-2025user-behavior-dataset-210k-records?select=users.csv"
+
+url_movies = "https://www.kaggle.com/datasets/sayeeduddin/netflix-2025user-behavior-dataset-210k-records?select=movies.csv"
+
+url_reviews = "https://www.kaggle.com/datasets/sayeeduddin/netflix-2025user-behavior-dataset-210k-records?select=reviews.csv"
+
+url_search_logs = "https://www.kaggle.com/datasets/sayeeduddin/netflix-2025user-behavior-dataset-210k-records?select=search_logs.csv"
+
+url_watch_history = "https://www.kaggle.com/datasets/sayeeduddin/netflix-2025user-behavior-dataset-210k-records?select=watch_history.csv"
+
+
+
+# Reading the data files and converting them to Panda's DataFrames
+users = pd.read_csv(url_users)
+
+movies = pd.read_csv(url_movies)
+
+reviews = pd.read_csv(url_reviews)
+
+search_logs = pd.read_csv(url_search_logs)
+
+watch_history = pd.read_csv(url_watch_history)
+
+
+
+# Most common subscription plans for users
+
+subscription_plans = users.value_counts("subscription_plan")
+
+
+ """

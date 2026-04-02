@@ -10,7 +10,7 @@ Descriptive Analytics: Use statistical summaries to find the median income and s
 
 Pattern Recognition: Use data visualization (Seaborn/Matplotlib) to identify natural groupings in customer behavior.
 
-Custom Segmentation: Develop a rule-based classification system to categorize customers into actionable segments (e.g., "Budget-Conscious," "Big Spenders," "Window Shoppers").
+Custom Segmentation: Develop a rule-based classification system to categorize customers into actionable segments (e.g., "Window Shoppers", "Budget-Conscious" ,"Normal Spenders", "Big Spenders" ,"Extravagent Spenders).
 
 🛠️ Tools Used
 Python: Main language for analysis.

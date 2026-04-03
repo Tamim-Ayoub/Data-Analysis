@@ -49,10 +49,10 @@ conditions = [
     data['spending_score'] > 75
 ]
 
-categorizes = ["window_shopper",'budget_conscious','normal_spender','big_spender','extravagent_spender']
+categories = ["window_shopper",'budget_conscious','normal_spender','big_spender','extravagant_spender']
 
 
-data['spending_category'] = np.select(conditions, categorizes, default='Unknown')
+data['spending_category'] = np.select(conditions, categories, default='Unknown')
 
 print(data.head(), '\n')
 
@@ -73,9 +73,9 @@ fig,axes = plt.subplots(1,3)
 mean_income_to_categroty = data.groupby("spending_category")["annual_income"].mean()
 
 # Order of the labels on the plot and the Labels themselves
-order = ["window_shopper","budget_conscious","normal_spender","big_spender","extravagent_spender"]
+order = ["window_shopper","budget_conscious","normal_spender","big_spender","extravagant_spender"]
 
-labels=["Window Shopper"," Budget Conscious","Normal Spender", "Big Spender", "Extravagent Spender"]
+labels=["Window Shopper"," Budget Conscious","Normal Spender", "Big Spender", "Extravagant Spender"]
 
 
 g1 = sns.barplot(mean_income_to_categroty,order=order,ax=axes[0])

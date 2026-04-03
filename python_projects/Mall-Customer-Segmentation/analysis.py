@@ -66,27 +66,49 @@ print(data_sorted.head(),'\n')
 
 """Draw Barplots to visualize relationships"""
 
+fig,axes = plt.subplots(1,3)
+
 # Get the average annual income of shoppers according to their Spending Category
 
 mean_income_to_categroty = data.groupby("spending_category")["annual_income"].mean()
 
-# Order of the labels on the plot
+# Order of the labels on the plot and the Labels themselves
 order = ["window_shopper","budget_conscious","normal_spender","big_spender","extravagent_spender"]
 
+labels=["Window Shopper"," Budget Conscious","Normal Spender", "Big Spender", "Extravagent Spender"]
 
 
+g1 = sns.barplot(mean_income_to_categroty,order=order,ax=axes[0])
 
-g1 = sns.barplot(mean_income_to_categroty,order=order)
+axes[0].set_title("Annual Income against Spending Category")
 
-g1.set_xticklabels(labels=["Window Shopper"," Budget Conscious","Normal Spender", "Big Spender", "Extravagent Spender"],rotation=30)
+g1.set_xticklabels(labels=labels,rotation=80)
 
-
+g1.set_xlabel("Spending Category")
+g1.set_ylabel("Annual Income")
 print(mean_income_to_categroty,'\n')
 
-# Draw a bar plot showcasing the mean annual income against the spending category showcasing the difference between each gender.
+# Draw a bar plot showcasing the mean Annual Income against the Spending Category showcasing the difference between each Gender.
+                                                         
+g2 = sns.barplot(data,x="spending_category",y="annual_income",hue='gender',order=order,ax=axes[1])
+g2.set_xticklabels(labels=labels,rotation=80)
 
-g2 = sns.barplot(data,x="spending_category",y="annual_income",hue='gender',order=order)
-g2.set_xticklabels(labels=["Window Shopper"," Budget Conscious","Normal Spender", "Big Spender", "Extravagent Spender"],rotation=30)
+g2.set_xlabel("Spending Category")
+g2.set_ylabel("Annual Income")
+axes[1].set_title("Annual Income against Spending Category by Gender")
+
+
+# Draw a bar plot showcasing the mean Age or each Spending Category
+g3 = sns.barplot(data,x='spending_category',y='age',ax=axes[2],order=order)
+
+g3.set_xticklabels(labels=labels,rotation=70)
+
+axes[2].set_title("Average Age for each Spending Category")
+g3.set_xlabel("Spending Category")
+g3.set_ylabel("Age")
+
+
+plt.tight_layout()
 plt.show()
 
 

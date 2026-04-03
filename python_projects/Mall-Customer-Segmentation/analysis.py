@@ -90,7 +90,7 @@ print(mean_income_to_categroty,'\n')
 
 # Draw a bar plot showcasing the mean Annual Income against the Spending Category showcasing the difference between each Gender.
                                                          
-g2 = sns.barplot(data,x="spending_category",y="annual_income",hue='gender',order=order,ax=axes[1])
+g2 = sns.barplot(data,x="spending_category",y="annual_income",hue='gender',order=order,ax=axes[1],errorbar=None)
 g2.set_xticklabels(labels=labels,rotation=80)
 
 g2.set_xlabel("Spending Category")
@@ -99,7 +99,7 @@ axes[1].set_title("Annual Income for each Spending Category seperated by Gender"
 
 
 # Draw a bar plot showcasing the mean Age or each Spending Category
-g3 = sns.barplot(data,x='spending_category',y='age',ax=axes[2],order=order)
+g3 = sns.barplot(data,x='spending_category',y='age',ax=axes[2],order=order,errorbar=None)
 
 g3.set_xticklabels(labels=labels,rotation=70)
 

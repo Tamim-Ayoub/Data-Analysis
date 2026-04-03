@@ -80,7 +80,7 @@ labels=["Window Shopper"," Budget Conscious","Normal Spender", "Big Spender", "E
 
 g1 = sns.barplot(mean_income_to_categroty,order=order,ax=axes[0])
 
-axes[0].set_title("Annual Income against Spending Category")
+axes[0].set_title("Annual Income for each Spending Category ")
 
 g1.set_xticklabels(labels=labels,rotation=80)
 
@@ -95,7 +95,7 @@ g2.set_xticklabels(labels=labels,rotation=80)
 
 g2.set_xlabel("Spending Category")
 g2.set_ylabel("Annual Income")
-axes[1].set_title("Annual Income against Spending Category by Gender")
+axes[1].set_title("Annual Income for each Spending Category seperated by Gender")
 
 
 # Draw a bar plot showcasing the mean Age or each Spending Category
@@ -114,8 +114,13 @@ plt.show()
 
 
 
+# Make a scatterplot for the Annual Income against the Spending score in betweeen the Spending Category
+
+g4 = sns.scatterplot(data=data,x="annual_income", y="spending_score",hue='spending_category')
+g4.set_title("Income vs. Spending Score: The 5 Natural Segments")
+g4.set_xlabel("Annual Income")
+g4.set_ylabel("Spending Score")
 
 
 
-
-
+plt.show()

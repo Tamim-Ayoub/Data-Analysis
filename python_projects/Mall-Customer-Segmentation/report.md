@@ -6,7 +6,6 @@ Depending on each Spending Score, customers were distributed into 5 categroies:
 3. Normal Spenders: Spending Score between 25 and 50
 
 
-
 4. Big Spenders: Spending Score between 50 and 75
 
 and lastly

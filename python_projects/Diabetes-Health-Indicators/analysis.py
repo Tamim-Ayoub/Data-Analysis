@@ -82,8 +82,27 @@ print(diabetes_health_lifestyle_mean1,'\n')
 print(diabetes_health_lifestyle_mean2,'\n')
 
 
-  
-         
+"""Get the mean of other non health-, non lifestyle-related factors"""
+
+
+
+# First make sure the data is representative enough of those factors, otherwise there might be biase involved in 
+# interpreting those data
+
+print("SEX COUNTS: ","\n", data.value_counts("Sex"))
+print("AGE COUNTS: ","\n", data.value_counts("Age"))
+print("INCOME COUNT","\n", data.value_counts("Income"))
+
+"""Due to high volatitilty in the data shown, it was decided to exclude them from the analysis to avoid bias"""
+
+
+
+
+
+
+
+
+
 """Evaluate each factor and suggest a mechanism to quantify the risk of developing diabetes"""
 
 """After observing different health- and lifestyle-factors that can be associated with Diabetes,
@@ -120,26 +139,59 @@ patients_risk_matrix = data[columns_to_copy].copy()
 patients_risk_matrix["Risk_Factor"] = 0
 
 
+
+# Make a function the calculates the risk factor 
+
 def calculate_risk(row):
    if( row['BMI'] > 31):
        row["Risk_Factor"] += 1
       
       
-   if (row["HeartDiseaseorAttack"] > 0.2 ):
+   if (row["HeartDiseaseorAttack"] > 0 ):
        row["Risk_Factor"] += 1
+   
    if (row["HighBP"] > 0):
        row["Risk_Factor"] += 1
-   if (row["HighCol"] > 1):
+   
+   if (row["HighChol"] > 0):
        row["Risk_Factor"] += 1
 
 
-   if (row["HighCol"] > 1):
+   if (row["DiffWalk"] > 0):
        row["Risk_Factor"] += 1
-        
-       
+   
+   if (row["PhysActivity"] < 1):
+       row["Risk_Factor"] += 1
+   
+   if (row["Smoker"] > 0):
+       row["Risk_Factor"] += 1
+
+   
+   if (row["Veggies"] < 1):
+       row["Risk_Factor"] += 1
+
+   
+   if (row["Fruits"] < 1):
+       row["Risk_Factor"] += 1
     
+   return row['Risk_Factor']
 
 
 
 
-patients_risk_matrix["Risk_Factor"] =
+
+patients_risk_matrix["Risk_Factor"] = patients_risk_matrix.apply(lambda row: calculate_risk(row),axis=1)
+
+
+
+
+
+
+"""Now add a final column, Risk, that categroizes the Risk for each patient
+ according to their pre-calculated Risk-Factor"""
+
+patients_risk_matrix["Risk"] = patients_risk_matrix["Risk_Factor"].apply(lambda x: "High Risk" if x > 6 else\
+                                                                         ("Low Risk" if x <= 3 else "Medium Risk"))
+
+
+print(patients_risk_matrix.head(5))

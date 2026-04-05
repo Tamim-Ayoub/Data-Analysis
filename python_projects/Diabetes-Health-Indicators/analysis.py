@@ -31,7 +31,7 @@ print(data.shape,'\n')
 #%%
 
 """Add an ID column for each patient"""
-data.insert(0,column='patientID',value=range(1,len(data) + 1))
+data.insert(0,column='PatientID',value=range(1,len(data) + 1))
 
 
 # Test the new DataFrame
@@ -84,4 +84,62 @@ print(diabetes_health_lifestyle_mean2,'\n')
 
   
          
-"""Evaluate """
+"""Evaluate each factor and suggest a mechanism to quantify the risk of developing diabetes"""
+
+"""After observing different health- and lifestyle-factors that can be associated with Diabetes,
+The following variables seem to stand out the most:
+
+BMI
+HeartDiseaseorAttack
+HighBP
+HighChol
+
+DiffWalk
+PhysActivity
+
+Smoker
+Fruits
+Veggies
+"""
+
+"""Suggested Risk-Caculation Method: Each factor in the above should contribute,according to its values, to an incremental variable
+called "Risk-Factor", and depending on the result of the Risk-Factor variable we can quantify
+the risk of a person developing diabetes in the future, based on their current life style and health-related issues. 
+"""
+
+# Copy the patients' data table with the wanted columns to a new dataframe
+
+columns_to_copy = ["PatientID","BMI","HeartDiseaseorAttack","HighBP","HighChol",\
+                   "DiffWalk","PhysActivity","Smoker","Fruits","Veggies"]
+
+patients_risk_matrix = data[columns_to_copy].copy()
+
+
+
+# Initiate the Risk_Factor column  
+patients_risk_matrix["Risk_Factor"] = 0
+
+
+def calculate_risk(row):
+   if( row['BMI'] > 31):
+       row["Risk_Factor"] += 1
+      
+      
+   if (row["HeartDiseaseorAttack"] > 0.2 ):
+       row["Risk_Factor"] += 1
+   if (row["HighBP"] > 0):
+       row["Risk_Factor"] += 1
+   if (row["HighCol"] > 1):
+       row["Risk_Factor"] += 1
+
+
+   if (row["HighCol"] > 1):
+       row["Risk_Factor"] += 1
+        
+       
+    
+
+
+
+
+patients_risk_matrix["Risk_Factor"] =

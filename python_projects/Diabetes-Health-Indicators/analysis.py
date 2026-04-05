@@ -142,6 +142,8 @@ patients_risk_matrix["Risk_Factor"] = 0
 
 # Make a function the calculates the risk factor 
 
+# NOTE: This function  consumes too much computational power. This method to calculate the Risk Factor was scratched
+"""
 def calculate_risk(row):
    if( row['BMI'] > 31):
        row["Risk_Factor"] += 1
@@ -178,12 +180,21 @@ def calculate_risk(row):
 
 
 
-
-
 patients_risk_matrix["Risk_Factor"] = patients_risk_matrix.apply(lambda row: calculate_risk(row),axis=1)
 
+"""
 
-
+patients_risk_matrix["Risk_Factor"] = (
+    (patients_risk_matrix['BMI'] > 31).astype(int) + 
+    (patients_risk_matrix["HighBP"] > 0).astype(int) + 
+    (patients_risk_matrix["Smoker"] > 0).astype(int) +
+    (patients_risk_matrix['HeartDiseaseorAttack'] > 0).astype(int) + 
+    (patients_risk_matrix["HighChol"] > 0).astype(int) + 
+    (patients_risk_matrix["Veggies"] == 0).astype(int) +
+    (patients_risk_matrix['Fruits'] == 0).astype(int) + 
+    (patients_risk_matrix["PhysActivity"] == 0).astype(int) + 
+    (patients_risk_matrix["DiffWalk"] > 0).astype(int) 
+)
 
 
 
@@ -194,4 +205,22 @@ patients_risk_matrix["Risk"] = patients_risk_matrix["Risk_Factor"].apply(lambda 
                                                                          ("Low Risk" if x <= 3 else "Medium Risk"))
 
 
-print(patients_risk_matrix.head(5))
+# print(patients_risk_matrix.head(5))
+
+
+
+"""Check the inegrity of the Risk factor calculation (is it a reliable way to determeine if a
+ person will develop diabetes?)
+
+
+"""
+
+# Check the risk factor with already existing table
+diabetic_patients_and_risk_factor = data.merge(patients_risk_matrix,on='PatientID',how='left')[['PatientID','Diabetes_yes_no','Risk','Risk_Factor']]
+diabetic_patients_and_risk_factor = diabetic_patients_and_risk_factor.set_index("PatientID")
+print(diabetic_patients_and_risk_factor.head(5))
+
+
+diabetes_and_risk = diabetic_patients_and_risk_factor.groupby(["Risk","Diabetes_yes_no"]).count()
+
+print(diabetes_and_risk)

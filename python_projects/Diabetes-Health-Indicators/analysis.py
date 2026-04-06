@@ -215,12 +215,20 @@ patients_risk_matrix["Risk"] = patients_risk_matrix["Risk_Factor"].apply(lambda 
 
 """
 
-# Check the risk factor with already existing table
+# Evalualte the effectivness of the Risk Factor by usuing it on the already-existing patients table
 diabetic_patients_and_risk_factor = data.merge(patients_risk_matrix,on='PatientID',how='left')[['PatientID','Diabetes_yes_no','Risk','Risk_Factor']]
 diabetic_patients_and_risk_factor = diabetic_patients_and_risk_factor.set_index("PatientID")
 print(diabetic_patients_and_risk_factor.head(5))
 
 
-diabetes_and_risk = diabetic_patients_and_risk_factor.groupby(["Risk","Diabetes_yes_no"]).count()
+"""Display the effectivness of the Risk-Factor calculation by grouping the risks and counting 
+them in each category (diabetic or healthy)
+"""
+diabetes_and_risk = diabetic_patients_and_risk_factor.groupby(["Risk","Diabetes_yes_no"]).size().reset_index(name="count")
 
 print(diabetes_and_risk)
+
+
+# Use a bar plot to visualize the results to get a clearer persepctive
+sns.barplot(data=diabetes_and_risk,x='Risk',y='count',hue='Diabetes_yes_no',order=['Low Risk','Medium Risk','High Risk'])
+plt.show()

@@ -52,7 +52,7 @@ and Healthy for healthy people. This is useful for simplifying the analysis
 data["Diabetes_yes_no"] = data["Diabetes_012"].apply(lambda x: "Diabetic" if x > 0 else "Healthy")
 
 
-print(data.head())
+print("The new dataframe: ",'\n',data.head(),'\n','\n')
 
 
 
@@ -64,7 +64,7 @@ on te distribution and effects of health factors on the occurence of Diabetes
 """
 diabetes_health_factors_mean = pd.pivot_table(data=data,index='Diabetes_yes_no',values=['HighBP',"HighChol","BMI",'HeartDiseaseorAttack'],aggfunc='mean')
 
-
+print('Diabetes Risk according to health factors','\n')
 print(diabetes_health_factors_mean,'\n')
 #%%
 
@@ -78,8 +78,10 @@ diabetes_health_lifestyle_mean1 = pd.pivot_table(data=data,index="Diabetes_yes_n
 diabetes_health_lifestyle_mean2 = pd.pivot_table(data=data,index="Diabetes_yes_no",\
                                                 values=["Smoker","HvyAlcoholConsump",'Fruits','Veggies'],aggfunc='mean')
 
+print('Diabetes Risk according to health and lifestyle factors','\n')
+
 print(diabetes_health_lifestyle_mean1,'\n')
-print(diabetes_health_lifestyle_mean2,'\n')
+print(diabetes_health_lifestyle_mean2,'\n','\n')
 
 
 """Get the mean of other non health-, non lifestyle-related factors"""
@@ -93,9 +95,33 @@ print("SEX COUNTS: ","\n", data.value_counts("Sex"))
 print("AGE COUNTS: ","\n", data.value_counts("Age"))
 print("INCOME COUNT","\n", data.value_counts("Income"))
 
-"""Due to high volatitilty in the data shown, it was decided to exclude them from the analysis to avoid bias"""
+"""Due to high volatitilty in the data shown, it was decided to exclude them from the analysis to avoid bias."""
 
 
+
+
+
+"""Measure the percentage decrease in diabetes prevalence among physically active individuals compared to sedentary individuals"""
+
+prevalence_decrease_pyhs_activ = pd.crosstab(data['PhysActivity'], data['Diabetes_yes_no'], normalize='index') * 100
+
+print("")
+
+print("Diabetes prevalence among physically active individuals compared to sedentary individuals: ",'\n',\
+      prevalence_decrease_pyhs_activ,'\n')
+
+diabetic_and_active = prevalence_decrease_pyhs_activ.loc[1, 'Diabetic']
+diabetic_and_sedentary = prevalence_decrease_pyhs_activ.loc[0, 'Diabetic']
+
+pct_decrease = ((diabetic_and_sedentary - diabetic_and_active) / diabetic_and_sedentary) * 100
+
+print(f"Diabetes Prevalence (Sedentary): {diabetic_and_sedentary:.2f}%",'\n')
+
+
+print(f"Diabetes Prevalence (Active): {diabetic_and_active:.2f}%",'\n')
+
+
+print(f"The risk is {pct_decrease:.2f}% lower among physically active individuals.",'\n','\n')
 
 
 
@@ -218,17 +244,17 @@ patients_risk_matrix["Risk"] = patients_risk_matrix["Risk_Factor"].apply(lambda 
 # Evalualte the effectivness of the Risk Factor by usuing it on the already-existing patients table
 diabetic_patients_and_risk_factor = data.merge(patients_risk_matrix,on='PatientID',how='left')[['PatientID','Diabetes_yes_no','Risk','Risk_Factor']]
 diabetic_patients_and_risk_factor = diabetic_patients_and_risk_factor.set_index("PatientID")
-print(diabetic_patients_and_risk_factor.head(5))
+print("Diabetic patients and their Risk Factor: ",'\n',diabetic_patients_and_risk_factor.head(5),'\n')
 
 
 """Display the effectivness of the Risk-Factor calculation by grouping the risks and counting 
 them in each category (diabetic or healthy)
 """
-diabetes_and_risk = diabetic_patients_and_risk_factor.groupby(["Risk","Diabetes_yes_no"]).size().reset_index(name="count")
+diabetes_risk_profile = diabetic_patients_and_risk_factor.groupby(["Risk","Diabetes_yes_no"]).size().reset_index(name="count")
 
-print(diabetes_and_risk)
+print("Diabetes Risk Profile: ", '\n',diabetes_risk_profile)
 
 
 # Use a bar plot to visualize the results to get a clearer persepctive
-sns.barplot(data=diabetes_and_risk,x='Risk',y='count',hue='Diabetes_yes_no',order=['Low Risk','Medium Risk','High Risk'])
+sns.barplot(data=diabetes_risk_profile,x='Risk',y='count',hue='Diabetes_yes_no',order=['Low Risk','Medium Risk','High Risk'])
 plt.show()

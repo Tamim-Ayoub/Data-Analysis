@@ -1,4 +1,13 @@
 {
-    "python.matplotlibBackend": "TkAgg"
+    "python.matplotlibBackend": "TkAgg",
+    "sqltools.useNodeRuntime": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:Data-Analysis}/sql_projects/e_commerce_customer_retention_and_revenue/database/database.sqlite",
+            "name": "database"
+        }
+    ]
 
 }

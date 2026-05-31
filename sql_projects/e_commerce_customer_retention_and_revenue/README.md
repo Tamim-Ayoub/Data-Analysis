@@ -29,7 +29,8 @@ The following four specific business intelligence requirements must be extracted
 * **Objective:** Determine the geographical origin of market demand within the high-ticket "Electronics" sector to optimize regional supply chain distribution.
 * **Data Required:** A ranking of countries based on the total physical quantity of electronic units purchased.
 
-### **Requirement 4: Dormant Account Identification (Churn Risk)**
+### **Requirement 4: Logistical Cost & Freight Audit**
 
-* **Objective:** Isolate registered accounts that have zero purchase history to facilitate a customer re-engagement and win-back marketing campaign.
-* **Data Required:** A list of customer names and their respective account registration dates for all users who have never placed an order.
+* **Objective:** Analyze the distribution of shipping costs across different business segments to identify logistics bottlenecks and categories with disproportionately high transport expenses.
+
+* **Data Required:** The average (mean) freight value, maximum freight value, and the ratio of freight cost to product price, aggregated by product category.

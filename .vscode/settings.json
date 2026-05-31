@@ -5,8 +5,8 @@
         {
             "previewLimit": 50,
             "driver": "SQLite",
-            "database": "${workspaceFolder:Data-Analysis}/sql_projects/e_commerce_customer_retention_and_revenue/database/database.sqlite",
-            "name": "database"
+            "name": "Olist",
+            "database": "${workspaceFolder:Data-Analysis}/sql_projects/e_commerce_customer_retention_and_revenue/database/olist.sqlite"
         }
     ]
 
